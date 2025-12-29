@@ -1,0 +1,23 @@
+name: aex402
+version: 0.1.0
+
+authors:
+  - Aldrin Labs
+
+description: |
+  Crystal SDK for the AeX402 Hybrid AMM on Solana.
+  Supports stable pools (AeX402 curve) and volatile pools (constant product),
+  with on-chain analytics, farming, lottery, and virtual pool graduation.
+
+crystal: ">= 1.10.0"
+
+license: MIT
+
+dependencies:
+  base58:
+    github: crystal-community/base58.cr
+    version: ">= 0.1.0"
+
+development_dependencies:
+  spec:
+    github: crystal-lang/crystal
