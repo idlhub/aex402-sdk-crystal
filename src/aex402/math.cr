@@ -29,11 +29,17 @@ module AeX402
     end
 
     def calc_d(x : BigInt, y : BigInt, amp : BigInt) : BigInt?
+      # Guard against division by zero
+      return BigInt.new(0) if x.zero? || y.zero?
+
       s = x + y
       return BigInt.new(0) if s.zero?
 
       d = s
       ann = amp * 4 # A * n^n where n=2
+
+      # Guard against zero amp
+      return nil if ann.zero?
 
       NEWTON_ITERATIONS.times do
         # d_p = d^3 / (4 * x * y)
@@ -45,6 +51,7 @@ module AeX402
         # d = (ann * s + d_p * 2) * d / ((ann - 1) * d + 3 * d_p)
         num = (ann * s + d_p * 2) * d
         denom = (ann - 1) * d + d_p * 3
+        return nil if denom.zero?
         d = num // denom
 
         # Check convergence
@@ -67,7 +74,13 @@ module AeX402
     end
 
     def calc_y(x_new : BigInt, d : BigInt, amp : BigInt) : BigInt?
+      # Guard against division by zero
+      return nil if x_new.zero?
+
       ann = amp * 4
+
+      # Guard against zero amp
+      return nil if ann.zero?
 
       # c = d^3 / (4 * x_new * ann)
       c = d * d // (x_new * 2)
